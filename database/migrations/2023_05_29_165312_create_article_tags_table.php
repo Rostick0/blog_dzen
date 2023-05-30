@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserInfoTypesTable extends Migration
+class CreateArticleTagsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateUserInfoTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_info_types', function (Blueprint $table) {
+        Schema::create('article_tags', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->foreignId('articles_id')->references('id')->on('articles')->onDelete('cascade');
+            $table->foreignId('tags_id')->references('id')->on('tags')->onDelete('cascade');
         });
     }
 
@@ -26,6 +27,6 @@ class CreateUserInfoTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_info_types');
+        Schema::dropIfExists('article_tags');
     }
 }

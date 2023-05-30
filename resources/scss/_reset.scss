@@ -1,0 +1,34 @@
+/* reset */
+*, * {
+	padding: 0;
+	margin: 0;
+	border: 0;
+	line-height: 1;
+	box-sizing: border-box;
+}
+
+:focus,
+:active {
+	outline: none;
+}
+
+a,
+a:focus,
+a:active {
+    list-style: none;
+	outline: none;
+	text-decoration: none;
+}
+
+button {
+	background: none;
+	cursor: pointer;
+}
+
+ul li {
+    list-style: none;
+}
+
+textarea {
+	resize: none;
+}

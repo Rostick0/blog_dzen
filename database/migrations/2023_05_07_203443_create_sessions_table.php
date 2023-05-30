@@ -17,7 +17,7 @@ class CreateSessionsTable extends Migration
             $table->id();
             $table->string('ip');
             $table->string('user_agent');
-            $table->timestamp('date');
+            $table->timestamp('created_at')->useCurrent();
             $table->foreignId('users_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

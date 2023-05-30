@@ -16,9 +16,10 @@ class CreateArticleCommentLikesTable extends Migration
         Schema::create('article_comment_likes', function (Blueprint $table) {
             $table->id();
             $table->boolean('is_author_like')->default(false);
+            $table->integer('count_likes')->default(0);;
             $table->foreignId('article_comments_id')->references('id')->on('article_comments')->onDelete('cascade');
             $table->foreignId('users_id')->references('id')->on('users')->onDelete('cascade');
-            $table->timestamp('created_date')->useCurrent();
+            $table->timestamp('created_at')->useCurrent();
         });
     }
 
