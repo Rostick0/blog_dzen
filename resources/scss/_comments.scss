@@ -336,6 +336,8 @@
                     }
     
                     .comment-user__text {
+                        flex-grow: 1;
+                        
                         font-size: 14px;
     
                         .comment-user__text_short-info {

@@ -39,7 +39,7 @@
                                         @if ($article->user_avatar && Storage::url('upload/image/' . $article->user_avatar))
                                             <img class="publication__user_img post__user_img"
                                                 src="{{ Storage::url('upload/image/' . $article->user_avatar) }}"
-                                                alt="{{ $user->user_name }}">
+                                                alt="{{ $article->user_name }}">
                                         @else
                                             <img class="publication__user_img post__user_img"
                                                 src="https://ses24.ru/assets/components/phpthumbof/cache/2ae6c058_f4f266b8.0172a862a4871f82bf93ce2425b2eb4d39.png"
@@ -104,47 +104,56 @@
                         @endif
                     </div>
                     <div class="comments__bottom">
-                        <div class="comments__count">
-                            5 Answers
-                        </div>
                         <ul class="comments__aswer">
-                            <li class="comment__answer comment-user">
-                                <div class="comment-user__image">
-                                    <img class="comment-user__img" src="img/img-comment.png" alt="">
-                                </div>
-                                <div class="comment-user__text">
-                                    <div class="comment-user__text_short-info">
-                                        <a href="">
-                                            <div class="comment-user__name">
-                                                Yaroslav Zhimkov
-                                            </div>
-                                        </a>
-                                        <time class="comment-user__date">July 02, 2022</time>
-                                    </div>
-                                    <div class="commet__likes">
-                                        <span>Лайков: 333</span>
-                                        @if (Auth::check())
-                                            <form
-                                                action="{{ route('like_comment_create', [
-                                                    'comments_id' => 1,
-                                                ]) }}"
-                                                method="post">
-                                                @csrf
-                                                <button class="like_button">❤</button>
-                                            </form>
+                            @foreach ($comments as $comment)
+                                <li class="comment__answer comment-user">
+                                    <div class="comment-user__image">
+                                        @if ($comment->user_avatar && Storage::url('upload/image/' . $user->avatar))
+                                            <img class="comment-user__img"
+                                                src="{{ Storage::url('upload/image/' . $user->avatar) }}"
+                                                alt="{{ $comment->user_name }}">
+                                        @else
+                                            <img class="comment-user__img"
+                                                src="https://ses24.ru/assets/components/phpthumbof/cache/2ae6c058_f4f266b8.0172a862a4871f82bf93ce2425b2eb4d39.png"
+                                                alt="Нет фото">
                                         @endif
                                     </div>
-                                    <div class="comment-user__message">
-                                        Nulla aliquam per te, vis omnes lobortis ocurreret an. Ex per omnis feugait, vim eu
-                                        voluptaria elaboraret. Ea ipsum constituto instructior est, cibo iriure facilisis ut
-                                        per. Et posse equidem aliquando eos, nobis lobortis definitionem eos an.
+                                    <div class="comment-user__text">
+                                        <div class="comment-user__text_short-info">
+                                            <a href="">
+                                                <div class="comment-user__name">
+                                                    {{ $comment->user_name }}
+                                                </div>
+                                            </a>
+                                            <time class="comment-user__date">{{ $comment->created_at }}</time>
+                                        </div>
+                                        <div class="commet__likes">
+                                            <span>Лайков: {{ $comment->count_likes }}</span>
+                                            @if (Auth::check())
+                                                <form
+                                                    action="{{ route('like_comment_create', [
+                                                        'comments_id' => 1,
+                                                    ]) }}"
+                                                    method="post">
+                                                    @csrf
+                                                    <button class="like_button">❤</button>
+                                                </form>
+                                            @endif
+                                        </div>
+                                        <div class="comment-user__message">
+                                            {{ $comment->content }}
+                                        </div>
+                                        @if ($comment->is_author_like)
+                                            <div class="comment__like_author">
+                                                <span class="like_default">❤</span> <span>От автора</span>
+                                            </div>
+                                        @endif
                                     </div>
-                                    <div class="comment__like_author">
-                                        <span>От автора</span> <span class="like_default">❤</span>
-                                    </div>
-                                </div>
-                            </li>
+                                </li>
+                            @endforeach
                         </ul>
+                        <br>
+                        {{ $comments->links('vendor.pagination') }}
                     </div>
                 </div>
             </div>

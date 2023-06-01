@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\ArticleComment;
 use App\Models\Articleview;
 use App\Models\Categories;
 use Illuminate\Http\Request;
@@ -28,10 +29,20 @@ class ArticleController extends Controller
             ]);
         }
 
+        $comments = ArticleComment::select(
+            'article_comments.*',
+            DB::raw('users.name as user_name'),
+            DB::raw('users.avatar as user_avatar')
+        )
+            ->leftJoin('users', 'users.id', '=', 'article_comments.users_id')
+            ->where('articles_id', $id)
+            ->paginate(1);
+
         // dd($article);
 
         return view('article', [
-            'article' => $article
+            'article' => $article,
+            'comments' => $comments
         ]);
     }
 
@@ -50,10 +61,13 @@ class ArticleController extends Controller
             'title' => 'required|min:3|max:255',
             'content' => 'required|min:100|max:65536',
             'categories_id' => 'required',
-            'image' => 'image|mimes:jpeg,png,jpg'
         ]);
 
         if ($request->file('image')) {
+            $request->validate([
+                'image' => 'image|mimes:jpeg,png,jpg'
+            ]);
+
             $extension = $request->file('image')->getClientOriginalExtension();
             $fileNameToStore = time() . '.' . $extension;
             $path = $request->file('image')->storeAs('public/upload/image', $fileNameToStore);
@@ -71,9 +85,7 @@ class ArticleController extends Controller
             ]
         );
 
-        return view('article', [
-            'id' => $article_id
-        ]);
+        return redirect('/article/' . $article_id);
     }
 
     public function show_edit(): View

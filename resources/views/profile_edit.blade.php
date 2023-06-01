@@ -47,7 +47,7 @@
                             </label>
                             <label class="label">
                                 <span>Новый аватар</span>
-                                <input class="input" type="file" name="avatar">
+                                <input class="input" type="file" name="avatar" accept="image/png, image/jpeg">
                                 @error('avatar')
                                     <span class="_error">{{ $message }}</span>
                                 @enderror

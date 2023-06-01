@@ -9,7 +9,8 @@
 
             <div class="content search-page__content">
                 <div class="post style-block">
-                    <form class="post__form" method="post" enctype="multipart/form-data">
+                    <form class="post__form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data">
+                        @csrf
                         <label class="label">
                             <span>Название статьи</span>
                             <input class="input" name="title" placeholder="Введите теги через запятую" type="text"
