@@ -1,6 +1,6 @@
 @extends('layout.default')
 
-@section('title', 'Регистрация')
+@section('title', 'Поиск ' . Request::get('search'))
 
 @section('html')
     <div class="container">
@@ -9,8 +9,8 @@
 
             <div class="content">
                 <div class="search">
-                    <form class="search__top">
-                        <input class="seart__input input style-block" type="text">
+                    <form class="search__top" action="{{ url()->current() }}">
+                        <input class="seart__input input style-block" type="search" name="search">
                         <button class="search__icon">
                             <svg class="search__icon_svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -24,236 +24,18 @@
                     </form>
                 </div>
                 <div class="articles">
-                    <article class="article style-block">
-                        <div class="article__image">
-                            <img class="article__img" src="img/img-home.png" alt="">
+                    @if ($articles->count())
+                        @foreach ($articles as $article)
+                            <x-article :article="$article" />
+                        @endforeach
+                        <br>
+                        {{ $articles->links('vendor.pagination') }}
+                    @else
+                        <div class="article__no-search">
+                            Нет статей
                         </div>
-                        <div class="article__info">
-                            <div class="article__text">
-                                <h2 class="article__title">
-                                    <a href="post.html">
-                                        Full set of iOS 16 interface elements for working in Figma
-                                    </a>
-                                </h2>
-                            </div>
-                            <ul class="article__tags tags">
-                                <li class="article__tag tag">
-                                    <a class="article__tag_link tag__link" href="">
-                                        #figma
-                                    </a>
-                                </li>
-                                <li class="article__tag tag">
-                                    <a class="article__tag_link tag__link" href="">
-                                        #ui
-                                    </a>
-                                </li>
-                                <li class="article__tag tag">
-                                    <a class="article__tag_link tag__link" href="">
-                                        #mobile
-                                    </a>
-                                </li>
-                                <li class="article__tag tag">
-                                    <a class="article__tag_link tag__link" href="">
-                                        #ios
-                                    </a>
-                                </li>
-                                <li class="article__tag tag">
-                                    <a class="article__tag_link tag__link" href="">
-                                        #apple
-                                    </a>
-                                </li>
-                            </ul>
-                            <div class="publication__shor-info article__short-info">
-                                <div class="publication__user">
-                                    <a class="publication__user_href" href="">
-                                        <img class="publication__user_img" src="img/user_image.png" alt="">
-                                        <div class="publication__user_name">
-                                            Xperience
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="publication__date">
-                                    Published July 02, 2022
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-
-
-                    <article class="article style-block">
-                        <div class="article__info">
-                            <div class="article__text">
-                                <h2 class="article__title">
-                                    <a href="post.html">
-                                        How personal blogs work, connecting external sources, transferring your
-                                        blog, article series
-                                    </a>
-                                </h2>
-                            </div>
-                            <ul class="article__tags tags">
-                                <li class="article__tag tag">
-                                    <a class="article__tag_link tag__link" href="">
-                                        #figma
-                                    </a>
-                                </li>
-                                <li class="article__tag tag">
-                                    <a class="article__tag_link tag__link" href="">
-                                        #ui
-                                    </a>
-                                </li>
-                                <li class="article__tag tag">
-                                    <a class="article__tag_link tag__link" href="">
-                                        #mobile
-                                    </a>
-                                </li>
-                                <li class="article__tag tag">
-                                    <a class="article__tag_link tag__link" href="">
-                                        #ios
-                                    </a>
-                                </li>
-                                <li class="article__tag tag">
-                                    <a class="article__tag_link tag__link" href="">
-                                        #apple
-                                    </a>
-                                </li>
-                            </ul>
-                            <div class="publication__shor-info article__short-info">
-                                <div class="publication__user">
-                                    <a class="publication__user_href" href="">
-                                        <img class="publication__user_img" src="img/user_image.png" alt="">
-                                        <div class="publication__user_name">
-                                            Xperience
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="publication__date">
-                                    Published July 02, 2022
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="article style-block">
-                        <div class="article__info">
-                            <div class="article__text">
-                                <h2 class="article__title">
-                                    <a href="post_second.html">
-                                        How personal blogs work, connecting external sources, transferring your
-                                        blog, article series
-                                    </a>
-                                </h2>
-                                <div class="article__subtitle">
-                                    Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit
-                                    officia consequat duis enim velit mollit. Exercitation veniam consequat sunt
-                                    nostrud amet.
-                                </div>
-                            </div>
-                            <ul class="article__tags tags">
-                                <li class="article__tag tag">
-                                    <a class="article__tag_link tag__link" href="">
-                                        #figma
-                                    </a>
-                                </li>
-                                <li class="article__tag tag">
-                                    <a class="article__tag_link tag__link" href="">
-                                        #ui
-                                    </a>
-                                </li>
-                                <li class="article__tag tag">
-                                    <a class="article__tag_link tag__link" href="">
-                                        #mobile
-                                    </a>
-                                </li>
-                                <li class="article__tag tag">
-                                    <a class="article__tag_link tag__link" href="">
-                                        #ios
-                                    </a>
-                                </li>
-                                <li class="article__tag tag">
-                                    <a class="article__tag_link tag__link" href="">
-                                        #apple
-                                    </a>
-                                </li>
-                            </ul>
-                            <div class="publication__shor-info article__short-info">
-                                <div class="publication__user">
-                                    <a class="publication__user_href" href="">
-                                        <img class="publication__user_img" src="img/user_image.png" alt="">
-                                        <div class="publication__user_name">
-                                            Xperience
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="publication__date">
-                                    Published July 02, 2022
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="article style-block">
-                        <div class="article__image">
-                            <img class="article__img" src="img/img-blog.png" alt="">
-                        </div>
-                        <div class="article__info">
-                            <div class="article__text">
-                                <h2 class="article__title">
-                                    <a href="post_second.html">
-                                        The Art of Product Management. The Importance of Soft Skills
-                                    </a>
-                                </h2>
-                                <div class="article__subtitle">
-                                    Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit
-                                    officia consequat duis enim velit mollit. Exercitation veniam consequat sunt
-                                    nostrud amet.
-                                </div>
-                            </div>
-                            <ul class="article__tags tags">
-                                <li class="article__tag tag">
-                                    <a class="article__tag_link tag__link" href="">
-                                        #figma
-                                    </a>
-                                </li>
-                                <li class="article__tag tag">
-                                    <a class="article__tag_link tag__link" href="">
-                                        #ui
-                                    </a>
-                                </li>
-                                <li class="article__tag tag">
-                                    <a class="article__tag_link tag__link" href="">
-                                        #mobile
-                                    </a>
-                                </li>
-                                <li class="article__tag tag">
-                                    <a class="article__tag_link tag__link" href="">
-                                        #ios
-                                    </a>
-                                </li>
-                                <li class="article__tag tag">
-                                    <a class="article__tag_link tag__link" href="">
-                                        #apple
-                                    </a>
-                                </li>
-                            </ul>
-                            <div class="publication__shor-info article__short-info">
-                                <div class="publication__user">
-                                    <a class="publication__user_href" href="">
-                                        <img class="publication__user_img" src="img/user_image.png" alt="">
-                                        <div class="publication__user_name">
-                                            Xperience
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="publication__date">
-                                    Published July 02, 2022
-                                </div>
-                            </div>
-                        </div>
-                    </article>
+                    @endif
                 </div>
-                {{-- <div class="article__no-search">
-                    No results match that query
-                </div> --}}
             </div>
 
             <div class="recommendations">

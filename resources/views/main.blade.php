@@ -9,12 +9,18 @@
 
             <div class="content">
                 <div class="articles">
-                    @foreach ($articles as $article)
-                        <x-article :article="$article" />
-                    @endforeach
+                    @if ($articles->count())
+                        @foreach ($articles as $article)
+                            <x-article :article="$article" />
+                        @endforeach
+                        <br>
+                        {{ $articles->links('vendor.pagination') }}
+                    @else
+                        <div class="article__no-search">
+                            Лента пуста, попробуйте зайти позже
+                        </div>
+                    @endif
                 </div>
-                <br>
-                {{ $articles->links('vendor.pagination') }}
             </div>
 
             <div class="recommendations">

@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
@@ -96,7 +97,15 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        $articles = Article::where('users_id', '=', $id)->paginate(10);
+        $articles = Article::select(
+            'articles.*',
+            DB::raw('users.name as user_name'),
+            DB::raw('users.avatar as user_avatar')
+        )
+            ->where('users_id', '=', $id)
+            ->leftJoin('users', 'users.id', '=', 'articles.users_id')
+            ->orderByDesc('created_at')
+            ->paginate(15);
 
         return view('profile', [
             'user' => $user,

@@ -81,8 +81,20 @@ class ArticleController extends Controller
         return back();
     }
 
-    public function show_search()
+    public function show_search(Request $request)
     {
-        return view('search');
+        $articles = Article::select(
+            'articles.*',
+            DB::raw('users.name as user_name'),
+            DB::raw('users.avatar as user_avatar')
+        )
+            ->leftJoin('users', 'users.id', '=', 'articles.users_id')
+            ->where('articles.title', 'LIKE', '%' . $request->search . '%')
+            ->orderByDesc('created_at')
+            ->paginate(15);
+
+        return view('search', [
+            'articles' => $articles
+        ]);
     }
 }
