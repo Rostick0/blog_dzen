@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
+use App\Models\Session;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -20,19 +22,25 @@ class UserController extends Controller
     public function store_login(Request $request)
     {
         $credentials = $request->validate([
-            'email' => 'required',
+            'email' => 'required|email',
             'password' => 'required'
         ]);
 
-        if (Auth::attempt($credentials, true)) {
-            throw ValidationException::withMessages([
-                'email' => trans('auth.failed')
-            ]);
+        if (Auth::attempt($credentials)) {
+            if (Auth::check()) {
+                Session::create([
+                    'ip' => $request->ip(),
+                    'user_agent' => $request->server('HTTP_USER_AGENT'),
+                    'users_id' => Auth::id()
+                ]);
+
+                return redirect()->intended('/profile/' . Auth::id());
+            }
         }
 
-        if (Auth::check()) return redirect()->intended('/profile/' . Auth::id());
-
-        return redirect('/login');
+        throw ValidationException::withMessages([
+            'email' => trans('auth.failed')
+        ]);
     }
 
     public function show_register(): View
@@ -47,10 +55,15 @@ class UserController extends Controller
             'email' => 'required|min:4|max:255|email|unique:users',
             'telephone' => 'min:3|max:20|unique:users',
             'password' => 'required|min:8|max:255|confirmed',
-            'avatar' => 'image|mimes:jpeg,png,jpg',
         ]);
 
+        $avatar = NULL;
+
         if ($request->file('avatar')) {
+            $request->validate([
+                'avatar' => 'mimes:jpeg,png,jpg',
+            ]);
+
             $extension = $request->file('avatar')->getClientOriginalExtension();
             $fileNameToStore = time() . '.' . $extension;
             $path = $request->file('avatar')->storeAs('public/upload/image', $fileNameToStore);
@@ -61,7 +74,7 @@ class UserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'telephone' => $request->telephone,
+            'telephone' => strlen($request->telephone > 5) ? $request->telephone : NULL,
             'password' => Hash::make($request->password),
             'avatar' => $avatar,
         ]);
@@ -70,39 +83,85 @@ class UserController extends Controller
 
         Auth::login($user);
 
+        Session::create([
+            'ip' => $request->ip(),
+            'user_agent' => $request->server('HTTP_USER_AGENT'),
+            'users_id' => Auth::id()
+        ]);
+
         return redirect('/profile/' . Auth::id());
     }
 
     public function show_profile(int $id): View
     {
-        return view('profile');
+        $user = User::find($id);
+
+        $articles = Article::where('users_id', '=', $id)->paginate(10);
+
+        return view('profile', [
+            'user' => $user,
+            'articles' => $articles
+        ]);
     }
 
     public function show_profile_edit(): View
     {
-        return view('profile_edit');
+        $user = User::find(Auth::id());
+
+        return view('profile_edit', [
+            'user' => $user
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, User $user)
+    public function store_profile_edit(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|min:4|max:255|email|unique:users,email,' . Auth::id(),
+            'telephone' => 'min:3|max:20|unique:users,telephone,' . Auth::id(),
+        ]);
+
+        $avatar = NULL;
+
+        if ($request->file('avatar')) {
+            $request->validate([
+                'avatar' => 'mimes:jpeg,png,jpg',
+            ]);
+
+            $extension = $request->file('avatar')->getClientOriginalExtension();
+            $fileNameToStore = time() . '.' . $extension;
+            $path = $request->file('avatar')->storeAs('public/upload/image', $fileNameToStore);
+
+            $avatar = $fileNameToStore;
+        }
+
+        User::where('id', '=', Auth::id())
+            ->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'telephone' => $request->telephone,
+                'avatar' => $avatar
+            ]);
+
+        return back();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
+    public function store_password_edit(Request $request)
     {
-        //
+        $request->validate([
+            'password' => 'required|min:8|max:255|confirmed',
+        ]);
+
+        $user = User::find(Auth::id());
+
+        if (!Hash::check($request->password_old, $user->password)) {
+            throw ValidationException::withMessages([
+                'password_old' => trans('auth.failed')
+            ]);
+        }
+
+        $user->update(['password' => Hash::make($request->password)]);
+
+        return back();
     }
 }

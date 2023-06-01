@@ -16,6 +16,8 @@
     &__user_img {
         border-radius: 16px;
 
+        object-fit: cover;
+
         width: 100px;
         height: 100px;
     }

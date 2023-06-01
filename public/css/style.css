@@ -54,6 +54,7 @@ textarea {
 .style-block {
   background: #FFFFFF;
   border-radius: 8px;
+  word-wrap: break-word;
 }
 
 .input {
@@ -129,7 +130,7 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 31px;
+  margin-bottom: 10px;
 }
 .publication__user_href {
   display: flex;
@@ -221,6 +222,36 @@ textarea {
 ._error {
   color: rgb(245, 12, 34);
   font-size: 14px;
+}
+
+.like_button {
+  border: 1px solid rgb(10, 10, 10);
+  border-radius: 6px;
+  color: rgb(10, 10, 10);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  transition: 200ms;
+  min-width: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+.like_button._active {
+  border-color: rgb(255, 8, 21);
+  color: rgb(255, 8, 21);
+}
+
+.like_default {
+  border-color: rgb(255, 8, 21);
+  color: rgb(255, 8, 21);
+}
+
+.like_button:hover {
+  border-color: rgb(100, 100, 100);
+  color: rgb(100, 100, 100);
 }
 
 .pagination {
@@ -592,6 +623,9 @@ textarea {
   row-gap: 20px;
 }
 
+.post__main-image {
+  margin-bottom: 30px;
+}
 .post__main-image_alignment {
   padding-top: 300px;
   position: relative;
@@ -607,11 +641,21 @@ textarea {
   width: 100%;
   height: 100%;
 }
+.post .post__tags {
+  margin-bottom: 20px;
+}
 .post .post__content {
   padding: 24px 40px 60px;
+  word-break: break-word;
 }
 .post .post__content .post__short-info {
   margin-top: 0;
+}
+.post .post__content .post__short-info_bottom {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  font-size: 14px;
 }
 .post .post__content .post__short-info .post__user .post__user_href {
   align-items: center;
@@ -619,6 +663,8 @@ textarea {
        column-gap: 12px;
 }
 .post .post__content .post__short-info .post__user .post__user_href .post__user_img {
+  -o-object-fit: cover;
+     object-fit: cover;
   width: 44px;
   height: 44px;
 }
@@ -1259,6 +1305,15 @@ textarea {
   height: 36px;
   width: 85px;
 }
+.comments .commet__likes {
+  display: flex;
+  justify-content: space-between;
+}
+.comments .comment__like_author {
+  display: flex;
+  -moz-column-gap: 4px;
+       column-gap: 4px;
+}
 
 @media (max-width: 480px) {
   .comments {
@@ -1650,6 +1705,8 @@ textarea {
 }
 .profile__user_img {
   border-radius: 16px;
+  -o-object-fit: cover;
+     object-fit: cover;
   width: 100px;
   height: 100px;
 }

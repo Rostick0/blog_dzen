@@ -16,6 +16,8 @@ class CreateArticleCommentsTable extends Migration
         Schema::create('article_comments', function (Blueprint $table) {
             $table->id();
             $table->text('content');
+            $table->integer('count_likes')->default(0);
+            $table->boolean('is_author_like')->default(false);
             $table->foreignId('articles_id')->references('id')->on('articles')->onDelete('cascade');
             $table->foreignId('users_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

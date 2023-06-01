@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [MainController::class, 'show'])->name('main');
 
+Route::get('/search', [ArticleController::class, 'show_search'])->name('search');
+
 Route::get('/login', [UserController::class, 'show_login'])->name('login');
 
 Route::post('/login', [UserController::class, 'store_login']);
@@ -31,22 +33,23 @@ Route::post('/register', [UserController::class, 'store_register']);
 
 Route::get('/profile/{id}', [UserController::class, 'show_profile'])->name('profile');
 
-Route::get('/profile/edit', [UserController::class, 'show_profile_edit'])->name('profile_edit')->middleware('auth');
+Route::get('/profile_edit', [UserController::class, 'show_profile_edit'])->name('profile_edit')->middleware('auth');
 
-Route::post('/profile/edit', [UserController::class, 'store_profile_edit'])->name('profile_edit')->middleware('auth');
+Route::post('/profile_edit', [UserController::class, 'store_profile_edit'])->middleware('auth');
+Route::post('/password_edit', [UserController::class, 'store_password_edit'])->name('password_edit')->middleware('auth');
 
 Route::get('/article/{id}', [ArticleController::class, 'show'])->name('article');
 
-Route::get('/article/create', [ArticleController::class, 'show_create'])->name('article_create')->middleware('auth');
+Route::get('/article_create', [ArticleController::class, 'show_create'])->name('article_create')->middleware('auth');
 
-Route::post('/article/create', [ArticleController::class, 'store_create'])->middleware('auth');
+Route::post('/article_create', [ArticleController::class, 'store_create'])->middleware('auth');
 
-Route::get('/article/edit', [ArticleController::class, 'show_edit'])->name('article_edit')->middleware('auth');
+Route::get('/article_edit', [ArticleController::class, 'show_edit'])->name('article_edit')->middleware('auth');
 
-Route::post('/article/edit', [ArticleController::class, 'store_edit'])->name('article_create')->middleware('auth');
+Route::post('/article_edit', [ArticleController::class, 'store_edit'])->middleware('auth');
 
-Route::post('/like', [ArticleLikeController::class, 'store_create'])->middleware('auth');
+Route::post('/like/{article_id}', [ArticleLikeController::class, 'store_create'])->name('like_create')->middleware('auth');
 
-Route::post('/like/comment', [ArticleCommmentLikeController::class, 'store_create'])->middleware('auth');
+Route::post('/like/comment/{comments_id}', [ArticleCommmentLikeController::class, 'store_create'])->name('like_comment_create')->middleware('auth');
 
-Route::post('/comment', [ArticleCommentController::class, 'store_create'])->middleware('auth');
+Route::post('/comment/{articles_id}', [ArticleCommentController::class, 'store_create'])->name('comment_create')->middleware('auth');

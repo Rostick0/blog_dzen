@@ -20,7 +20,7 @@ class ArticleSeeder extends Seeder
                 'title' => Str::random(random_int(5, 31)),
                 'content' => Str::random(random_int(100, 300)),
                 'categories_id' => random_int(1, 6),
-                'users_id' => random_int(1, 11),
+                'users_id' => random_int(1, 10),
                 'count_likes' => random_int(0, 2),
                 'count_views' => random_int(2, 11)
             ]);

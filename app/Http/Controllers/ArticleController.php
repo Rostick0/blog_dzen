@@ -3,15 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\Articleview;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class ArticleController extends Controller
 {
-    public function show(): View
+    public function show(int $id): View
     {
-        return view('article');
+        $article = Article::select(
+            'articles.*',
+            DB::raw('users.name as user_name'),
+            DB::raw('users.avatar as user_avatar')
+        )
+            ->leftJoin('users', 'users.id', '=', 'articles.users_id')->find($id);
+
+        if (Auth::check()) {
+            Articleview::firstOrCreate([
+                'articles_id' => $id,
+                'users_id' => Auth::id(),
+            ]);
+        }
+
+        // dd($article);
+
+        return view('article', [
+            'article' => $article
+        ]);
     }
 
     public function show_create(): View
@@ -36,17 +56,19 @@ class ArticleController extends Controller
             $image = $fileNameToStore;
         }
 
-        Article::create(
+        $article_id = Article::insertGetId(
             [
                 'users_id' => Auth::id(),
                 'title' => $request->title,
                 'content' => $request->content,
                 'categories_id' => $request->categories_id,
-                'image' => ($image ?? NULL)
+                'image' => $image
             ]
         );
 
-        return back();
+        return view('article', [
+            'id' => $article_id
+        ]);
     }
 
     public function show_edit(): View
@@ -57,5 +79,10 @@ class ArticleController extends Controller
     public function store_edit()
     {
         return back();
+    }
+
+    public function show_search()
+    {
+        return view('search');
     }
 }

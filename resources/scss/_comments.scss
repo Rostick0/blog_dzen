@@ -240,6 +240,16 @@
             }
         }
     }
+
+    .commet__likes {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .comment__like_author {
+        display: flex;
+        column-gap: 4px;
+    }
 }
 
 @media (max-width: 480px) {

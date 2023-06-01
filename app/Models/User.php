@@ -16,8 +16,10 @@ class User extends Model implements Authenticatable
     public $remember_token = false;
 
     protected $fillable = [
+        'name',
         'email',
         'telephone',
-        'password'
+        'password',
+        'avatar'
     ];
 }

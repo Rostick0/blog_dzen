@@ -6,6 +6,7 @@
 
 .post {
     &__main-image {
+        margin-bottom: 30px;
 
         &_alignment {
             padding-top: 300px;
@@ -29,11 +30,25 @@
         }
     }
 
+    .post__tags {
+        margin-bottom: 20px;
+    }
+
     .post__content {
         padding: 24px 40px 60px;
 
+        word-break: break-word;
+
         .post__short-info {
             margin-top: 0;
+
+            &_bottom {
+                display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+
+                font-size: 14px;
+            }
 
             .post__user {
                 .post__user_href {
@@ -41,6 +56,7 @@
                     column-gap: 12px;
 
                     .post__user_img {
+                        object-fit: cover;
                         width: 44px;
                         height: 44px;
                     }

@@ -217,7 +217,9 @@ commentAnswer === null || commentAnswer === void 0 ? void 0 : commentAnswer.forE
         reg = new RegExp("^" + reg + "$");
         if (!reg.test(this.value) || this.value.length < 5 || keyCode > 47 && keyCode < 58) this.value = new_value;
       }
-      input.value = "+7 ";
+      if (!input.value) {
+        input.value = "+7 ";
+      }
       input.addEventListener("input", mask, false);
       input.addEventListener("keydown", mask, false);
     });
