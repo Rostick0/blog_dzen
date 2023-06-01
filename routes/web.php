@@ -49,7 +49,10 @@ Route::get('/article_edit', [ArticleController::class, 'show_edit'])->name('arti
 Route::post('/article_edit', [ArticleController::class, 'store_edit'])->middleware('auth');
 
 Route::post('/like/{article_id}', [ArticleLikeController::class, 'store_create'])->name('like_create')->middleware('auth');
+Route::post('/like_delete/{article_id}', [ArticleLikeController::class, 'store_delete'])->name('like_delete')->middleware('auth');
 
 Route::post('/like/comment/{id}', [ArticleCommmentLikeController::class, 'store_create'])->name('like_comment_create')->middleware('auth');
+
+Route::post('/like_delete/comment/{id}', [ArticleCommmentLikeController::class, 'store_delete'])->name('like_comment_delete')->middleware('auth');
 
 Route::post('/comment/{articles_id}', [ArticleCommentController::class, 'store_create'])->name('comment_create')->middleware('auth');

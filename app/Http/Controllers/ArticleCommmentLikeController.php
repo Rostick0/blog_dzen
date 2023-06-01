@@ -8,11 +8,23 @@ use Illuminate\Support\Facades\Auth;
 
 class ArticleCommmentLikeController extends Controller
 {
-    public function store_create(int $id) {
+    public function store_create(int $id)
+    {
         $query = ArticleCommentLike::firstOrCreate([
             'article_comments_id' => $id,
             'users_id' => Auth::id()
         ]);
+
+        return back();
+    }
+
+    public function store_delete(int $id)
+    {
+        ArticleCommentLike::where([
+            'article_comments_id' => $id,
+            'users_id' => Auth::id()
+        ])
+            ->delete();
 
         return back();
     }

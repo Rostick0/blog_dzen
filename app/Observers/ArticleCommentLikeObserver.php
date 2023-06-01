@@ -40,7 +40,10 @@ class ArticleCommentLikeObserver
      */
     public function deleted(ArticleCommentLike $articleCommentLike)
     {
-        //
+        ArticleComment::find($articleCommentLike->article_comments_id)
+            ->update([
+                'count_likes' => ArticleCommentLike::where('article_comments_id', '=', $articleCommentLike->article_comments_id)->count()
+            ]);
     }
 
     /**

@@ -40,7 +40,10 @@ class ArticleLikeObserver
      */
     public function deleted(ArticleLike $articleLike)
     {
-        //
+        Article::find($articleLike->articles_id)
+            ->update([
+                'count_likes' => 5
+            ]);
     }
 
     /**
@@ -51,7 +54,6 @@ class ArticleLikeObserver
      */
     public function restored(ArticleLike $articleLike)
     {
-        //
     }
 
     /**
@@ -62,6 +64,5 @@ class ArticleLikeObserver
      */
     public function forceDeleted(ArticleLike $articleLike)
     {
-        //
     }
 }

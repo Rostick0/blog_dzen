@@ -67,13 +67,25 @@
                                     <span>{{ $article->count_likes }}</span>
                                 </div>
                                 @if (Auth::check())
-                                    <form
-                                        action="{{ route('like_create', [
-                                            'article_id' => $article->id,
-                                        ]) }}" method="post">
-                                        @csrf
-                                        <button class="like_button">❤</button>
-                                    </form>
+                                    @if ($article->user_like)
+                                        <form
+                                            action="{{ route('like_delete', [
+                                                'article_id' => $article->id,
+                                            ]) }}"
+                                            method="post">
+                                            @csrf
+                                            <button class="like_button _active">❤</button>
+                                        </form>
+                                    @else
+                                        <form
+                                            action="{{ route('like_create', [
+                                                'article_id' => $article->id,
+                                            ]) }}"
+                                            method="post">
+                                            @csrf
+                                            <button class="like_button">❤</button>
+                                        </form>
+                                    @endif
                                 @endif
                             </div>
                         </div>
@@ -127,18 +139,29 @@
                                             </a>
                                             <time class="comment-user__date">{{ $comment->created_at }}</time>
                                         </div>
-                                        {{-- {{dd($comment)}} --}}
                                         <div class="commet__likes">
                                             <span>Лайков: {{ $comment->count_likes }}</span>
+                                            {{-- {{$comment}} --}}
                                             @if (Auth::check())
-                                                <form
-                                                    action="{{ route('like_comment_create', [
-                                                        'id' => $comment->id,
-                                                    ]) }}"
-                                                    method="post">
-                                                    @csrf
-                                                    <button class="like_button">❤</button>
-                                                </form>
+                                                @if ($comment->has_like)
+                                                    <form
+                                                        action="{{ route('like_comment_delete', [
+                                                            'id' => $comment->id,
+                                                        ]) }}"
+                                                        method="post">
+                                                        @csrf
+                                                        <button class="like_button _active">❤</button>
+                                                    </form>
+                                                @else
+                                                    <form
+                                                        action="{{ route('like_comment_create', [
+                                                            'id' => $comment->id,
+                                                        ]) }}"
+                                                        method="post">
+                                                        @csrf
+                                                        <button class="like_button">❤</button>
+                                                    </form>
+                                                @endif
                                             @endif
                                         </div>
                                         <div class="comment-user__message">

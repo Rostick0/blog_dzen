@@ -40,7 +40,7 @@ class ArticleViewObserver
      */
     public function deleted(ArticleView $articleView)
     {
-        //
+        
     }
 
     /**
