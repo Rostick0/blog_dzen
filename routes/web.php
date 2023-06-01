@@ -50,6 +50,6 @@ Route::post('/article_edit', [ArticleController::class, 'store_edit'])->middlewa
 
 Route::post('/like/{article_id}', [ArticleLikeController::class, 'store_create'])->name('like_create')->middleware('auth');
 
-Route::post('/like/comment/{comments_id}', [ArticleCommmentLikeController::class, 'store_create'])->name('like_comment_create')->middleware('auth');
+Route::post('/like/comment/{id}', [ArticleCommmentLikeController::class, 'store_create'])->name('like_comment_create')->middleware('auth');
 
 Route::post('/comment/{articles_id}', [ArticleCommentController::class, 'store_create'])->name('comment_create')->middleware('auth');

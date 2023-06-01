@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\ArticleCommentLike;
+use App\Models\ArticleLike;
 use App\Models\Articleview;
+use App\Observers\ArticleCommentLikeObserver;
+use App\Observers\ArticleLikeObserver;
 use App\Observers\ArticleViewObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -30,5 +34,7 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         Articleview::observe(ArticleViewObserver::class);
+        ArticleLike::observe(ArticleLikeObserver::class);
+        ArticleCommentLike::observe(ArticleCommentLikeObserver::class);
     }
 }

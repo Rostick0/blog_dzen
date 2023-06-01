@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\Auth;
 
 class ArticleCommmentLikeController extends Controller
 {
-    public function store_create(int $comments_id) {
-        ArticleCommentLike::firstOrCreate([
-            'article_comments_id' => $comments_id,
+    public function store_create(int $id) {
+        $query = ArticleCommentLike::firstOrCreate([
+            'article_comments_id' => $id,
             'users_id' => Auth::id()
         ]);
     }

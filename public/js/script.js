@@ -54,12 +54,6 @@ var bannerInput = document.querySelector('.banner__input');
 var bannerButton = document.querySelector('.banner__button');
 var commentsTopTextarea = document.querySelector('.comments__top_textarea');
 var commentsTopButton = document.querySelector('.comments__top_button');
-if (commentsTopButton) {
-  commentsTopButton.addEventListener('click', function (e) {
-    e.preventDefault();
-    activeModal();
-  });
-}
 removeDisabledButton(commentsTopTextarea, commentsTopButton);
 removeDisabledButton(bannerInput, bannerButton);
 
@@ -117,30 +111,6 @@ if (postSliderList && postSliderArrowLeft && postSliderArrowRight) {
   slider(postSliderImg);
 }
 
-// modal
-
-var modal = document.querySelector('.modal');
-var modalClose = document.querySelector('.modal__close');
-if (modal) {
-  modal.addEventListener('click', function (e) {
-    if (e.target.classList[0] == 'modal') {
-      removeModal();
-    }
-  });
-  modalClose.addEventListener('click', function (e) {
-    removeModal();
-  });
-}
-function activeModal() {
-  modal.style.top = '0';
-  modal.style.animation = 'blackout 1.5s forwards';
-}
-function removeModal() {
-  modal.style.animation = '';
-  modal.style.background = 'rgba(0, 0, 0, 0)';
-  modal.style.top = '-150%';
-}
-
 // burger-menu
 
 var headerFixedActive = document.querySelector('.header-fixed__active');
@@ -167,30 +137,6 @@ function removeMenu() {
   aside.style.transform = 'translateX(-100%)';
   aside.style.animation = '';
 }
-
-// commments
-
-var commentAnswer = document.querySelectorAll('.comment__answer');
-commentAnswer === null || commentAnswer === void 0 ? void 0 : commentAnswer.forEach(function (elem) {
-  var buttonReply = elem.querySelector('.comment-user__reply');
-  var commentsTextarea = elem.querySelector('.comments__textarea');
-  var commentsUserAnswer = elem.querySelector('.comments-user__answer');
-  var commentsButtonCancel = elem.querySelector('.comments__button_cancel');
-  var commentsButtonReplay = elem.querySelector('.comments__button_replay');
-  if (!elem) {
-    return;
-  }
-  buttonReply.addEventListener('click', function () {
-    commentsUserAnswer.style.display = 'block';
-    commentsButtonCancel.addEventListener('click', function () {
-      commentsUserAnswer.style.display = 'none';
-    });
-    commentsButtonReplay.addEventListener('click', function () {
-      activeModal();
-    });
-    removeDisabledButton(commentsTextarea, commentsButtonReplay);
-  });
-});
 (function () {
   window.addEventListener("DOMContentLoaded", function () {
     [].forEach.call(document.querySelectorAll('input[type="tel"]'), function (input) {

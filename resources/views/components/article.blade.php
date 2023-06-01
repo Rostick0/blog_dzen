@@ -24,7 +24,7 @@
                     @if ($article->user_avatar && Storage::url('upload/image/' . $article->user_avatar))
                         <img class="publication__user_img"
                             src="{{ Storage::url('upload/image/' . $article->user_avatar) }}"
-                            alt="{{ $user->user_name }}">
+                            alt="{{ $article->user_name }}">
                     @else
                         <img class="publication__user_img"
                             src="https://ses24.ru/assets/components/phpthumbof/cache/2ae6c058_f4f266b8.0172a862a4871f82bf93ce2425b2eb4d39.png"

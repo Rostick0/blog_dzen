@@ -70,7 +70,7 @@
                                     <form
                                         action="{{ route('like_create', [
                                             'article_id' => $article->id,
-                                        ]) }}">
+                                        ]) }}" method="post">
                                         @csrf
                                         <button class="like_button">❤</button>
                                     </form>
@@ -108,9 +108,9 @@
                             @foreach ($comments as $comment)
                                 <li class="comment__answer comment-user">
                                     <div class="comment-user__image">
-                                        @if ($comment->user_avatar && Storage::url('upload/image/' . $user->avatar))
+                                        @if ($comment->user_avatar && Storage::url('upload/image/' . $comment->user_avatar))
                                             <img class="comment-user__img"
-                                                src="{{ Storage::url('upload/image/' . $user->avatar) }}"
+                                                src="{{ Storage::url('upload/image/' . $comment->user_avatar) }}"
                                                 alt="{{ $comment->user_name }}">
                                         @else
                                             <img class="comment-user__img"
@@ -127,12 +127,13 @@
                                             </a>
                                             <time class="comment-user__date">{{ $comment->created_at }}</time>
                                         </div>
+                                        {{-- {{dd($comment)}} --}}
                                         <div class="commet__likes">
                                             <span>Лайков: {{ $comment->count_likes }}</span>
                                             @if (Auth::check())
                                                 <form
                                                     action="{{ route('like_comment_create', [
-                                                        'comments_id' => 1,
+                                                        'id' => $comment->id,
                                                     ]) }}"
                                                     method="post">
                                                     @csrf

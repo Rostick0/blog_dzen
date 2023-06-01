@@ -61,14 +61,6 @@ const bannerButton = document.querySelector('.banner__button');
 const commentsTopTextarea = document.querySelector('.comments__top_textarea');
 const commentsTopButton = document.querySelector('.comments__top_button');
 
-if (commentsTopButton) {
-    commentsTopButton.addEventListener('click', e => {
-        e.preventDefault();
-
-        activeModal();
-    });
-}
-
 removeDisabledButton(commentsTopTextarea, commentsTopButton);
 removeDisabledButton(bannerInput, bannerButton);
 
@@ -148,36 +140,6 @@ if (postSliderList && postSliderArrowLeft && postSliderArrowRight) {
 
 
 
-// modal
-
-const modal = document.querySelector('.modal');
-const modalClose = document.querySelector('.modal__close');
-
-if (modal) {
-    modal.addEventListener('click', e => {
-        if (e.target.classList[0] == 'modal') {
-            removeModal();
-        }
-    });
-
-    modalClose.addEventListener('click', e => {
-        removeModal();
-    })
-}
-
-function activeModal() {
-    modal.style.top = '0';
-    modal.style.animation = 'blackout 1.5s forwards';
-}
-
-function removeModal() {
-    modal.style.animation = '';
-    modal.style.background = 'rgba(0, 0, 0, 0)';
-    modal.style.top = '-150%';
-}
-
-
-
 
 // burger-menu
 
@@ -206,39 +168,6 @@ function removeMenu() {
     aside.style.transform = 'translateX(-100%)';
     aside.style.animation = '';
 }
-
-
-
-
-// commments
-
-const commentAnswer = document.querySelectorAll('.comment__answer');
-
-commentAnswer?.forEach(elem => {
-    const buttonReply = elem.querySelector('.comment-user__reply');
-    const commentsTextarea = elem.querySelector('.comments__textarea');
-    const commentsUserAnswer = elem.querySelector('.comments-user__answer');
-    const commentsButtonCancel = elem.querySelector('.comments__button_cancel');
-    const commentsButtonReplay = elem.querySelector('.comments__button_replay');
-
-    if (!elem) {
-        return;
-    }
-
-    buttonReply.addEventListener('click', () => {
-        commentsUserAnswer.style.display = 'block';
-
-        commentsButtonCancel.addEventListener('click', () => {
-            commentsUserAnswer.style.display = 'none';
-        });
-
-        commentsButtonReplay.addEventListener('click', () => {
-            activeModal();
-        });
-
-        removeDisabledButton(commentsTextarea, commentsButtonReplay);
-    })
-});
 
 (function () {
     window.addEventListener("DOMContentLoaded", function () {

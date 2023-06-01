@@ -73,13 +73,17 @@ class ArticleController extends Controller
             $image = $fileNameToStore;
         }
 
+        $time = NOW();
+
         $article_id = Article::insertGetId(
             [
                 'users_id' => Auth::id(),
                 'title' => $request->title,
                 'content' => $request->content,
                 'categories_id' => $request->categories_id,
-                'image' => $image
+                'image' => $image,
+                'created_at' => $time,
+                'updated_at' => $time
             ]
         );
 

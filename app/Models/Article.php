@@ -16,6 +16,6 @@ class Article extends Model
         'categories_id',
         'users_id',
         'count_likes',
-        'count_views'
+        'count_views',
     ];
 }
