@@ -17,7 +17,7 @@ class ArticleViewObserver
     {
         Article::find($articleView->articles_id)
             ->update([
-                'count_views' => ArticleView::where('articles_id', $articleView->articles_id)->count()
+                'count_views' => ArticleView::where('articles_id', '=', $articleView->articles_id)->count()
             ]);
     }
 

@@ -36,9 +36,7 @@ class ArticleController extends Controller
         )
             ->leftJoin('users', 'users.id', '=', 'article_comments.users_id')
             ->where('articles_id', $id)
-            ->paginate(1);
-
-        // dd($article);
+            ->paginate(15);
 
         return view('article', [
             'article' => $article,

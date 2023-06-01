@@ -1234,6 +1234,7 @@ textarea {
   height: 32px;
 }
 .comments .comments__bottom .comments__aswer .comment__answer .comment-user__text {
+  flex-grow: 1;
   font-size: 14px;
 }
 .comments .comments__bottom .comments__aswer .comment__answer .comment-user__text .comment-user__text_short-info {
