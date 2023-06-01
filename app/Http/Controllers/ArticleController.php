@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Articleview;
+use App\Models\Categories;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -36,7 +37,11 @@ class ArticleController extends Controller
 
     public function show_create(): View
     {
-        return view('article_create');
+        $categories = Categories::all();
+
+        return view('article_create', [
+            'categories' => $categories
+        ]);
     }
 
     public function store_create(Request $request)

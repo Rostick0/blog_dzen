@@ -21,7 +21,7 @@
 
         <nav class="aside__nav">
             <ul class="aside__navigation">
-                <li class="aside__navigation_item _active">
+                <li class="aside__navigation_item {{ (request()->is('/')) ? '_active' : '' }}">
                     <a class="aside__navigation_link" href="{{ route('main') }}">
                         <svg class="aside__navigation_svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -41,7 +41,7 @@
                         </div>
                     </a>
                 </li>
-                <li class="aside__navigation_item">
+                <li class="aside__navigation_item {{ (request()->is('hot')) ? '_active' : '' }}">
                     <a class="aside__navigation_link" href="">
                         <svg class="aside__navigation_svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -50,11 +50,11 @@
                                 stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                         <div class="aside__navigation_text">
-                            Новинки
+                            Топ
                         </div>
                     </a>
                 </li>
-                <li class="aside__navigation_item">
+                <li class="aside__navigation_item {{ (request()->is('search')) ? '_active' : '' }}">
                     <a class="aside__navigation_link" href="{{ route('search') }}">
                         <svg class="aside__navigation_svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -69,6 +69,53 @@
                         </div>
                     </a>
                 </li>
+                @if (Auth::check())
+                    <li class="aside__navigation_item {{ (request()->is('article_create')) ? '_active' : '' }}">
+                        <a class="aside__navigation_link" href="{{ route('article_create') }}">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 12H19" stroke="black" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M12 5L12 19" stroke="black" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                            <div class="aside__navigation_text">
+                                Создать статью
+                            </div>
+                        </a>
+                    </li>
+                    <li class="aside__navigation_item {{ (request()->is('profile')) ? '_active' : '' }}">
+                        <a class="aside__navigation_link" href="{{ route('profile', [
+                            'id' => Auth::id()
+                        ]) }}">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path id="Vector"
+                                    d="M19 21C19 17.134 15.866 14 12 14C8.13401 14 5 17.134 5 21M12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7C16 9.20914 14.2091 11 12 11Z"
+                                    stroke="#000000" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                            <div class="aside__navigation_text">
+                                Профиль
+                            </div>
+                        </a>
+                    </li>
+                @else
+                    <li class="aside__navigation_item {{ (request()->is('login', 'register')) ? '_active' : '' }}">
+                        <a class="aside__navigation_link" href="{{ route('login') }}">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M15 16.5V19C15 20.1046 14.1046 21 13 21H6C4.89543 21 4 20.1046 4 19V5C4 3.89543 4.89543 3 6 3H13C14.1046 3 15 3.89543 15 5V8.0625M20 12L9 12M9 12L11.5 14.5M9 12L11.5 9.5"
+                                    stroke="#000000" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                            <div class="aside__navigation_text">
+                                Вход
+                            </div>
+                        </a>
+                    </li>
+                @endif
             </ul>
         </nav>
     </div>

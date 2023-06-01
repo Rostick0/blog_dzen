@@ -20,8 +20,10 @@
                         </label>
                         <label class="label">
                             <span>Категория</span>
-                            <select name="categories_id" required>
-
+                            <select class="input" name="categories_id" required>
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
                             </select>
                             @error('categories_id')
                                 <span class="_error">{{ $message }}</span>

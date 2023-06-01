@@ -43,7 +43,11 @@
                         {{ $articles->links('vendor.pagination') }}
                     @else
                         <div class="article__no-search">
-                            Пользователь не писал статьи
+                            @if ($user->id == Auth::id())
+                                У вас нет статей, не хотите ли <a href="{{route('article_create')}}" class="link">создать</a>?
+                            @else
+                                Пользователь не писал статьи
+                            @endif
                         </div>
                     @endif
                 </div>

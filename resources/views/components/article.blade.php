@@ -20,7 +20,7 @@
         </div>
         <div class="publication__shor-info article__short-info">
             <div class="publication__user">
-                <a class="publication__user_href" href="{{ $article->users_id }}">
+                <a class="publication__user_href" href="{{ route('profile', $article->users_id) }}">
                     @if ($article->user_avatar && Storage::url('upload/image/' . $article->user_avatar))
                         <img class="publication__user_img"
                             src="{{ Storage::url('upload/image/' . $article->user_avatar) }}"
