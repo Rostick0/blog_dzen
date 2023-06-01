@@ -13,5 +13,7 @@ class ArticleLikeController extends Controller
             'articles_id' => $article_id,
             'users_id' => Auth::id()
         ]);
+
+        return back();
     }
 }

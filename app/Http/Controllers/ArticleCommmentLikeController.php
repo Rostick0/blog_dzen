@@ -13,5 +13,7 @@ class ArticleCommmentLikeController extends Controller
             'article_comments_id' => $id,
             'users_id' => Auth::id()
         ]);
+
+        return back();
     }
 }

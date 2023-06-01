@@ -12,7 +12,8 @@ class ArticleCommentLike extends Model
     protected $table = 'article_comment_likes';
 
     protected $fillable = [
-        'article_comments_id ',
+        'is_author_like',
+        'article_comments_id',
         'users_id'
     ];
 }

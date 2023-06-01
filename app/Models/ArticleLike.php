@@ -12,7 +12,7 @@ class ArticleLike extends Model
     protected $table = 'article_likes';
 
     protected $fillable = [
-        'is_author_like',
+        'articles_id',
         'article_comments_id ',
         'users_id'
     ];
