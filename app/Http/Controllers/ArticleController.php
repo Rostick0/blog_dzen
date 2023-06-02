@@ -11,6 +11,7 @@ use App\Models\Categories;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ArticleController extends Controller
@@ -111,13 +112,56 @@ class ArticleController extends Controller
         return redirect('/article/' . $article_id);
     }
 
-    public function show_edit(): View
+    public function show_edit(int $id)
     {
-        return view('article_edit');
+        $article = Article::find($id);
+        $categories = Categories::all();
+
+        if ($article->users_id != Auth::id()) {
+            return redirect('/article/' . $article->id);
+        }
+
+        return view('article_edit', [
+            'article' => $article,
+            'categories' => $categories
+        ]);
     }
 
-    public function store_edit()
+    public function store_edit(int $id, Request $request)
     {
+        $article = Article::find($id);
+
+        $request->validate([
+            'title' => 'required|min:3|max:255',
+            'content' => 'required|min:100|max:65536',
+            'categories_id' => 'required',
+        ]);
+
+        if ($request->file('image')) {
+            $request->validate([
+                'image' => 'image|mimes:jpeg,png,jpg'
+            ]);
+
+            if ($article->image && Storage::exists('public/upload/image' . $article->image)) {
+                Storage::delete('public/upload/image' . $article->image);
+            }
+
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $fileNameToStore = time() . '.' . $extension;
+            $path = $request->file('image')->storeAs('public/upload/image', $fileNameToStore);
+
+            $image = $fileNameToStore;
+        }
+
+        Article::find($id)
+            ->update([
+                'title' => $request->title,
+                'content' => $request->content,
+                'categories_id' => $request->categories_id,
+                'image' => $image ?? $article->image,
+                'updated_at' => NOW(),
+            ]);
+
         return back();
     }
 

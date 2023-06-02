@@ -136,8 +136,6 @@ class UserController extends Controller
 
         $user = User::find(Auth::id());
 
-        dd(Storage::exists('/public/upload/image/' . $user->avatar));
-
         $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|min:4|max:255|email|unique:users,email,' . Auth::id(),
