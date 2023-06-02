@@ -29,7 +29,6 @@ class ArticleLikeObserver
      */
     public function updated(ArticleLike $articleLike)
     {
-        //
     }
 
     /**
@@ -40,7 +39,9 @@ class ArticleLikeObserver
      */
     public function deleted(ArticleLike $articleLike)
     {
-        Article::find($articleLike->articles_id)
+        Article::where([
+            'articles_id', '=', $articleLike->articles_id
+        ])
             ->update([
                 'count_likes' => 5
             ]);

@@ -18,6 +18,8 @@ class ArticleController extends Controller
 {
     public function show(int $id): View
     {
+        // dd($id);
+
         $article_like = ArticleLike::where([
             'articles_id' => $id,
             'users_id' => Auth::id() ?? 0
@@ -47,9 +49,8 @@ class ArticleController extends Controller
             ->leftJoin('users', 'users.id', '=', 'article_comments.users_id')
             ->leftJoin('article_comment_likes', function ($join) {
                 $join->on('article_comments.id', '=', 'article_comment_likes.article_comments_id');
-                $join->on('article_comment_likes.users_id', '=', DB::raw(Auth::id()));
+                $join->on('article_comment_likes.users_id', '=', DB::raw(Auth::id() ?? 0));
             })
-            // ->leftJoin('article_comment_likes', 'article_comments.id', '=', 'article_comment_likes.article_comments_id')
             ->where('articles_id', $id)
             ->paginate(15);
 

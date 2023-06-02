@@ -22,11 +22,12 @@ class ArticleCommmentLikeController extends Controller
 
     public function store_delete(int $id)
     {
-        ArticleCommentLike::where([
+        $query = ArticleCommentLike::where([
             'article_comments_id' => $id,
             'users_id' => Auth::id()
-        ])
-            ->delete();
+        ]);
+
+        $query->delete();
 
         return back();
     }
