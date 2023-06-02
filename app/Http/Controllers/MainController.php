@@ -17,7 +17,7 @@ class MainController extends Controller
             DB::raw('users.avatar as user_avatar')
         )
             ->leftJoin('users', 'users.id', '=', 'articles.users_id')
-            ->orderByDesc('created_at')
+            ->orderBy('created_at')
             ->paginate(15);
 
         return view('main', [
