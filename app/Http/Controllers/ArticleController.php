@@ -173,12 +173,23 @@ class ArticleController extends Controller
             DB::raw('users.avatar as user_avatar')
         )
             ->leftJoin('users', 'users.id', '=', 'articles.users_id')
-            ->where('articles.title', 'LIKE', '%' . $request->search . '%')
+            ->where([
+                [
+                    'articles.title', 'LIKE', '%' . $request->search . '%'
+                ],
+                [
+                    'articles.categories_id', '=', $request->categories_id
+
+                ]
+            ])
             ->orderByDesc('created_at')
             ->paginate(15);
 
+        $categories = Categories::all();
+
         return view('search', [
-            'articles' => $articles
+            'articles' => $articles,
+            'categories' => $categories
         ]);
     }
 }

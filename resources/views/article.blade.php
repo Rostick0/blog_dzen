@@ -46,15 +46,22 @@
                                                 alt="Нет фото">
                                         @endif
                                         <div class="publication__user_name post__user_name">
-                                            {{ $article->name }}
+                                            {{ $article->user_name }}
                                         </div>
                                     </a>
                                 </div>
-                                <div class="post__date publication__date">
-                                    {{ date('H:i d.m.Y', strtotime($article->created_at)) }}
-                                    @if ($article->created_at != $article->updated_at)
-                                        <span
-                                            title="{{ date('H:i d.m.Y', strtotime($article->updated_at)) }}">(ред.)</span>
+                                <div style="text-align: right">
+                                    <div class="post__date publication__date">
+                                        {{ date('H:i d.m.Y', strtotime($article->created_at)) }}
+                                        @if ($article->created_at != $article->updated_at)
+                                            <span
+                                                title="{{ date('H:i d.m.Y', strtotime($article->updated_at)) }}">(ред.)</span>
+                                        @endif
+                                    </div>
+                                    @if ($article->users_id == Auth::id())
+                                        <a href="{{route('article_edit', [
+                                            'id' => $article->id
+                                        ])}}" class="link">Редактировать</a>
                                     @endif
                                 </div>
                             </div>

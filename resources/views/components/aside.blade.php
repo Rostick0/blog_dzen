@@ -41,19 +41,6 @@
                         </div>
                     </a>
                 </li>
-                <li class="aside__navigation_item {{ (request()->is('hot')) ? '_active' : '' }}">
-                    <a class="aside__navigation_link" href="">
-                        <svg class="aside__navigation_svg" width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path class="aside__navigation_svg_stroke"
-                                d="M12.5 9.94118C15 6.63294 12.5 2.11765 11.25 1C11.25 4.39541 9.03375 6.29876 7.5 7.70588C5.9675 9.11412 5 11.3271 5 13.2941C5 15.0726 5.79018 16.7783 7.1967 18.0359C8.60322 19.2935 10.5109 20 12.5 20C14.4891 20 16.3968 19.2935 17.8033 18.0359C19.2098 16.7783 20 15.0726 20 13.2941C20 11.5819 18.68 8.89059 17.5 7.70588C15.2675 11.0588 14.0112 11.0588 12.5 9.94118Z"
-                                stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                        <div class="aside__navigation_text">
-                            Топ
-                        </div>
-                    </a>
-                </li>
                 <li class="aside__navigation_item {{ (request()->is('search')) ? '_active' : '' }}">
                     <a class="aside__navigation_link" href="{{ route('search') }}">
                         <svg class="aside__navigation_svg" width="24" height="24" viewBox="0 0 24 24"

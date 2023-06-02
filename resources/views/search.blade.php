@@ -8,8 +8,8 @@
             <x-aside />
 
             <div class="content">
-                <div class="search">
-                    <form class="search__top" action="{{ url()->current() }}">
+                <form class="search" action="{{ url()->current() }}">
+                    <div class="search__top" action="{{ url()->current() }}">
                         <input class="seart__input input style-block" type="search" name="search">
                         <button class="search__icon">
                             <svg class="search__icon_svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -21,8 +21,21 @@
                                     stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
                         </button>
-                    </form>
-                </div>
+                    </div>
+                    <div class="search__bottom">
+                        <label class="label">
+                            <span>Категория</span>
+                            <select class="input" name="categories_id">
+                                <option value="">Не указано</option>
+                                @foreach ($categories as $category)
+                                    <option {{ Request::get('categories_id') == $category->id ? 'selected' : '' }}
+                                        value="{{ $category->id }}">{{ $category->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </label>
+                    </div>
+                </form>
                 <div class="articles">
                     @if ($articles->count())
                         @foreach ($articles as $article)
