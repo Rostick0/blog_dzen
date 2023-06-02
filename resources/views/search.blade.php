@@ -9,7 +9,7 @@
 
             <div class="content">
                 <form class="search" action="{{ url()->current() }}">
-                    <div class="search__top" action="{{ url()->current() }}">
+                    <div class="search__top">
                         <input class="seart__input input style-block" type="search" name="search">
                         <button class="search__icon">
                             <svg class="search__icon_svg" width="24" height="24" viewBox="0 0 24 24" fill="none"

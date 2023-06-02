@@ -167,21 +167,25 @@ class ArticleController extends Controller
 
     public function show_search(Request $request)
     {
+        $where_query = [
+            [
+                'articles.title', 'LIKE', '%' . $request->search . '%'
+            ]
+        ];
+
+        if ((int) $request->categories_id) {
+            $where_query[] = [
+                'articles.categories_id', '=', $request->categories_id
+            ];
+        }
+
         $articles = Article::select(
             'articles.*',
             DB::raw('users.name as user_name'),
             DB::raw('users.avatar as user_avatar')
         )
             ->leftJoin('users', 'users.id', '=', 'articles.users_id')
-            ->where([
-                [
-                    'articles.title', 'LIKE', '%' . $request->search . '%'
-                ],
-                [
-                    'articles.categories_id', '=', $request->categories_id
-
-                ]
-            ])
+            ->where($where_query)
             ->orderByDesc('created_at')
             ->paginate(15);
 

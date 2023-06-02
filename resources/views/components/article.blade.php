@@ -1,9 +1,11 @@
 <article class="article style-block">
     @if ($article->image && Storage::exists('/public/upload/image/' . $article->image))
-        <div class="article__image">
+        <a class="article__image" href="{{ route('article', [
+            'id' => $article->id,
+        ]) }}">
             <img class="article__img" src="{{ Storage::url('upload/image/' . $article->image) }}"
                 alt="{{ $article->title }}">
-        </div>
+        </a>
     @endif
     <div class="article__info">
         <div class="article__text">
