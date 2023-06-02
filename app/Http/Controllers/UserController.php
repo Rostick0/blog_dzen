@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
@@ -51,12 +52,20 @@ class UserController extends Controller
 
     public function store_register(Request $request)
     {
+
         $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|min:4|max:255|email|unique:users',
             'telephone' => 'min:3|max:20|unique:users',
             'password' => 'required|min:8|max:255|confirmed',
         ]);
+
+        $params = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'telephone' => strlen($request->telephone > 5) ? $request->telephone : NULL,
+            'password' => Hash::make($request->password),
+        ];
 
         $avatar = NULL;
 
@@ -124,6 +133,11 @@ class UserController extends Controller
 
     public function store_profile_edit(Request $request)
     {
+
+        $user = User::find(Auth::id());
+
+        dd(Storage::exists('/public/upload/image/' . $user->avatar));
+
         $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|min:4|max:255|email|unique:users,email,' . Auth::id(),
@@ -137,6 +151,10 @@ class UserController extends Controller
                 'avatar' => 'mimes:jpeg,png,jpg',
             ]);
 
+            if ($user->avatar && Storage::exists('public/upload/image' . $user->avatar)) {
+                Storage::delete('public/upload/image' . $user->avatar);
+            }
+
             $extension = $request->file('avatar')->getClientOriginalExtension();
             $fileNameToStore = time() . '.' . $extension;
             $path = $request->file('avatar')->storeAs('public/upload/image', $fileNameToStore);
@@ -149,7 +167,7 @@ class UserController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'telephone' => $request->telephone,
-                'avatar' => $avatar
+                'avatar' => $avatar ?? $user->avatar
             ]);
 
         return back();

@@ -1,5 +1,5 @@
 <article class="article style-block">
-    @if ($article->image && Storage::url('upload/image/' . $article->image))
+    @if ($article->image && Storage::exists('/public/upload/image/' . $article->image))
         <div class="article__image">
             <img class="article__img" src="{{ Storage::url('upload/image/' . $article->image) }}"
                 alt="{{ $article->title }}">
@@ -21,7 +21,7 @@
         <div class="publication__shor-info article__short-info">
             <div class="publication__user">
                 <a class="publication__user_href" href="{{ route('profile', $article->users_id) }}">
-                    @if ($article->user_avatar && Storage::url('upload/image/' . $article->user_avatar))
+                    @if ($article->user_avatar && Storage::exists('/public/upload/image/' . $article->user_avatar))
                         <img class="publication__user_img"
                             src="{{ Storage::url('upload/image/' . $article->user_avatar) }}"
                             alt="{{ $article->user_name }}">

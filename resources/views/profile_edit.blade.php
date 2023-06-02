@@ -13,7 +13,7 @@
                         <div class="publication__shor-info profile__short-info">
                             <div class="publication__user profile__user">
                                 <div class="publication__user_href profile__user_href">
-                                    @if ($user->avatar && Storage::url('upload/image/' . $user->avatar))
+                                    @if ($user->avatar && Storage::exists('/public/upload/image/' . $user->avatar))
                                         <img class="publication__user_img profile__user_img"
                                             src="{{ Storage::url('upload/image/' . $user->avatar) }}"
                                             alt="{{ $user->name }}">

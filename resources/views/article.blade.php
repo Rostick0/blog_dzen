@@ -20,7 +20,7 @@
 
             <div class="content search-page__content">
                 <div class="post style-block">
-                    @if ($article->image && Storage::url('upload/image/' . $article->image))
+                    @if ($article->image && Storage::exists('/public/upload/image/' . $article->image))
                         <div class="post__main-image">
                             <div class="post__main-image_alignment">
                                 <img class="post__main-img" src="{{ Storage::url('upload/image/' . $article->image) }}"
@@ -36,7 +36,7 @@
                                         href="{{ route('profile', [
                                             'id' => $article->users_id,
                                         ]) }}">
-                                        @if ($article->user_avatar && Storage::url('upload/image/' . $article->user_avatar))
+                                        @if ($article->user_avatar && Storage::exists('/public/upload/image/' . $article->user_avatar))
                                             <img class="publication__user_img post__user_img"
                                                 src="{{ Storage::url('upload/image/' . $article->user_avatar) }}"
                                                 alt="{{ $article->user_name }}">
@@ -120,7 +120,7 @@
                             @foreach ($comments as $comment)
                                 <li class="comment__answer comment-user">
                                     <div class="comment-user__image">
-                                        @if ($comment->user_avatar && Storage::url('upload/image/' . $comment->user_avatar))
+                                        @if ($comment->user_avatar && Storage::exists('/public/upload/image/' . $comment->user_avatar))
                                             <img class="comment-user__img"
                                                 src="{{ Storage::url('upload/image/' . $comment->user_avatar) }}"
                                                 alt="{{ $comment->user_name }}">
