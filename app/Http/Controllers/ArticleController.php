@@ -37,7 +37,7 @@ class ArticleController extends Controller
                 'users_id' => Auth::id(),
             ]);
         }
-        
+
         $comments = ArticleComment::select(
             'article_comments.*',
             DB::raw('users.name as user_name'),
@@ -156,6 +156,26 @@ class ArticleController extends Controller
             ]);
 
         return back();
+    }
+
+    public function show_delete(int $id)
+    {
+        $article = Article::where([
+            [
+                'id', '=', $id,
+            ],
+            [
+                'users_id', '=', Auth::id()
+            ]
+        ]);
+
+        $article_get = $article->first();
+
+        if ($article_get->image && Storage::exists('public/upload/image' . $article_get->image)) {
+            Storage::delete('public/upload/image' . $article_get->image);
+        }
+
+        $article->delete();
     }
 
     public function show_search(Request $request)

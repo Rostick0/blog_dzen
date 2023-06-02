@@ -52,6 +52,14 @@
                         @enderror
                         <button class="button">Изменить</button>
                     </form>
+                    <form class="post__form"
+                        action="{{ route('article_delete', [
+                            'id' => $article->id,
+                        ]) }}"
+                        method="post">
+                        @csrf
+                        <button class="_error">Удалить</button>
+                    </form>
                 </div>
             </div>
 
