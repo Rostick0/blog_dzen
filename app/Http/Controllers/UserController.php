@@ -149,8 +149,8 @@ class UserController extends Controller
                 'avatar' => 'mimes:jpeg,png,jpg',
             ]);
 
-            if ($user->avatar && Storage::exists('public/upload/image' . $user->avatar)) {
-                Storage::delete('public/upload/image' . $user->avatar);
+            if ($user->avatar && Storage::exists('/public/upload/image/' . $user->avatar)) {
+                Storage::delete('/public/upload/image/' . $user->avatar);
             }
 
             $extension = $request->file('avatar')->getClientOriginalExtension();

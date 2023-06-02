@@ -135,8 +135,8 @@ class ArticleController extends Controller
                 'image' => 'image|mimes:jpeg,png,jpg'
             ]);
 
-            if ($article->image && Storage::exists('public/upload/image' . $article->image)) {
-                Storage::delete('public/upload/image' . $article->image);
+            if ($article->image && Storage::exists('/public/upload/image/' . $article->image)) {
+                Storage::delete('/public/upload/image/' . $article->image);
             }
 
             $extension = $request->file('image')->getClientOriginalExtension();
@@ -169,13 +169,15 @@ class ArticleController extends Controller
             ]
         ]);
 
-        $article_get = $article->first();
+        $article_get = Article::find($id);
 
-        if ($article_get->image && Storage::exists('public/upload/image' . $article_get->image)) {
-            Storage::delete('public/upload/image' . $article_get->image);
+        if ($article_get->image && Storage::exists('/public/upload/image/' . $article_get->image)) {
+            Storage::delete('/public/upload/image/' . $article_get->image);
         }
 
         $article->delete();
+
+        return redirect('/');
     }
 
     public function show_search(Request $request)
