@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
+use App\Models\ArticleComment;
 use App\Models\ArticleCommentLike;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

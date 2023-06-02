@@ -37,14 +37,7 @@ class ArticleController extends Controller
                 'users_id' => Auth::id(),
             ]);
         }
-
-        $article_comment_like = ArticleCommentLike::where([
-            'article_comments.id' => 'id',
-            'article_comments.users_id' => Auth::id() ?? 0
-        ])
-            ->select('id')
-            ->limit(1);
-
+        
         $comments = ArticleComment::select(
             'article_comments.*',
             DB::raw('users.name as user_name'),

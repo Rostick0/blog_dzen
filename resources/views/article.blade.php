@@ -59,9 +59,10 @@
                                         @endif
                                     </div>
                                     @if ($article->users_id == Auth::id())
-                                        <a href="{{route('article_edit', [
-                                            'id' => $article->id
-                                        ])}}" class="link">Редактировать</a>
+                                        <a href="{{ route('article_edit', [
+                                            'id' => $article->id,
+                                        ]) }}"
+                                            class="link">Редактировать</a>
                                     @endif
                                 </div>
                             </div>
@@ -126,7 +127,10 @@
                         <ul class="comments__aswer">
                             @foreach ($comments as $comment)
                                 <li class="comment__answer comment-user">
-                                    <div class="comment-user__image">
+                                    <a class="comment-user__image"
+                                        href="{{ route('profile', [
+                                            'id' => $comment->users_id,
+                                        ]) }}">
                                         @if ($comment->user_avatar && Storage::exists('/public/upload/image/' . $comment->user_avatar))
                                             <img class="comment-user__img"
                                                 src="{{ Storage::url('upload/image/' . $comment->user_avatar) }}"
@@ -136,10 +140,13 @@
                                                 src="https://ses24.ru/assets/components/phpthumbof/cache/2ae6c058_f4f266b8.0172a862a4871f82bf93ce2425b2eb4d39.png"
                                                 alt="Нет фото">
                                         @endif
-                                    </div>
+                                    </a>
                                     <div class="comment-user__text">
                                         <div class="comment-user__text_short-info">
-                                            <a href="">
+                                            <a
+                                                href="{{ route('profile', [
+                                                    'id' => $comment->users_id,
+                                                ]) }}">
                                                 <div class="comment-user__name">
                                                     {{ $comment->user_name }}
                                                 </div>
@@ -148,7 +155,6 @@
                                         </div>
                                         <div class="commet__likes">
                                             <span>Лайков: {{ $comment->count_likes }}</span>
-                                            {{-- {{$comment}} --}}
                                             @if (Auth::check())
                                                 @if ($comment->has_like)
                                                     <form
