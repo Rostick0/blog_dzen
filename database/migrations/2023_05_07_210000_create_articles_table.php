@@ -18,7 +18,7 @@ class CreateArticlesTable extends Migration
             $table->string('title');
             $table->string('image')->nullable();
             $table->text('content');
-            $table->foreignId('categories_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('categories_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreignId('users_id')->references('id')->on('users')->onDelete('cascade');
             $table->bigInteger('count_likes')->default(0);
             $table->bigInteger('count_views')->default(0);

@@ -18,8 +18,6 @@ class ArticleController extends Controller
 {
     public function show(int $id): View
     {
-        // dd($id);
-
         $article_like = ArticleLike::where([
             'articles_id' => $id,
             'users_id' => Auth::id() ?? 0
